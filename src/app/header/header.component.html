@@ -1,5 +1,14 @@
 <header>
-  <p class="title">A* Algorithm Illustrated</p>
-  <p class="state-message">{{ stateMessage }}</p>
-  <button>Start!</button>
+  <p class="title">A* Pathfinding Algorithm Illustrated</p>
+  <p
+    class="state-message"
+    [ngClass]="{ success: algorithmResult === 1, fail: algorithmResult === 0 }"
+  >
+    {{ stateMessage }}
+  </p>
+  <button [disabled]="!gridControlService.isReady()" (click)="startAlgorithm()">
+    <!-- Check whether to start the algorithm if not started
+      or reset it if it has already been started -->
+    {{ algorithmResult === 0 || algorithmResult === 1 ? "Reset" : "Start" }}
+  </button>
 </header>

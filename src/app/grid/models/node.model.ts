@@ -36,7 +36,7 @@ export class Node {
   }
 
   public set searched(val: boolean) {
-    this.searched = val;
+    this.isSearched = val;
   }
 
   public set obstacle(val: boolean) {

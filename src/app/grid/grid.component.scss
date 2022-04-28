@@ -18,12 +18,11 @@
   }
 
   .node {
-    border: 1px dotted #333;
     cursor: pointer;
     transition: 150ms ease-in-out background-color;
 
     &.startNode {
-      background-color: lightgreen;
+      background-color: #24b424 !important;
     }
 
     &.endNode {
@@ -36,6 +35,10 @@
 
     &.pathNode {
       background-color: #67a6ba;
+      border: none;
+    }
+    &.searchedNode {
+      background-color: #ebeb6a;
       border: none;
     }
   }

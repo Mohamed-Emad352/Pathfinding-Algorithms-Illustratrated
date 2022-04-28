@@ -1,3 +1,4 @@
+import { GridControlService } from 'src/app/services/grid-control.service';
 import { Node } from './node.model';
 import { PriorityQueue } from './priority-queue.model';
 
@@ -10,11 +11,12 @@ export class AStarAlgorithm {
     this.constructGraph();
   }
 
-  public start(startNode: Node, endNode: Node): Node[] | null {
+  public start(startNode: Node, endNode: Node): any {
     const nodesToBeVisited = new PriorityQueue();
     const nodeParents: { [key: number]: number } = {};
     const nodeCosts: { [key: number]: number } = {};
     nodeCosts[startNode.getId()] = 0;
+    const nodesSearched: Node[] = [];
 
     // Add the start node to the queue
     nodesToBeVisited.enqueue(
@@ -27,11 +29,16 @@ export class AStarAlgorithm {
       const currentNode = nodesToBeVisited.dequeue();
       if (currentNode.getId() === endNode.getId()) {
         // We found the goal node
-        return this.getPath(nodeParents, startNode, endNode);
+        return [this.getPath(nodeParents, startNode, endNode), nodesSearched];
       }
-
       const neighbors = this.getNeighbors(currentNode); // Get the neighbors of the current node
-      neighbors.forEach((neighbor) => {
+      neighbors.forEach(async (neighbor) => {
+        // if neighbor is not in nodesSearched, push it to nodesSearched
+        if (
+          !nodesSearched.find((node: Node) => node.getId() === neighbor.getId())
+        ) {
+          nodesSearched.push(neighbor);
+        }
         const newCost = nodeCosts[currentNode.getId()] + NODE_COST;
         if (
           (!nodeCosts[neighbor.getId()] ||

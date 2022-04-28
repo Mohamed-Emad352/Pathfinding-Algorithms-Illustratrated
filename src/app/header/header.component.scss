@@ -12,6 +12,14 @@ header {
 
   .state-message {
     color: #f1f1f1;
+
+    &.success {
+      color: #00ff00;
+    }
+
+    &.fail {
+      color: #ff0000;
+    }
   }
 
   button {
@@ -27,6 +35,11 @@ header {
     border: none;
     border-radius: 0.2rem;
     transition: 150ms ease-in-out background-color;
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: gray !important;
+    }
 
     &:hover {
       background-color: #f0c14a;

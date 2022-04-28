@@ -1,11 +1,15 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Result } from '../enums/algorithm-result.enum';
 import { Appstate } from '../enums/app-state.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrentAppStateService {
+  public static algorithmResultEvent = new EventEmitter<Result | null>();
+  public static resetAlgorithmEvent = new EventEmitter<void>();
+
   private static currentState = new BehaviorSubject<Appstate>(
     Appstate.SelectingStartPosition
   );

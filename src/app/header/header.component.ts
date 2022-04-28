@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Result } from '../enums/algorithm-result.enum';
 import { Appstate } from '../enums/app-state.enum';
 import { CurrentAppStateService } from '../services/current-app-state.service';
+import { GridControlService } from '../services/grid-control.service';
 
 @Component({
   selector: 'app-header',
@@ -9,15 +11,44 @@ import { CurrentAppStateService } from '../services/current-app-state.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  public stateMessage: string = '';
   private stateSubscription?: Subscription;
   private currentState?: Appstate;
+  private algorithmResultSubscription?: Subscription;
+  public stateMessage: string = '';
+  public algorithmResult?: Result;
 
-  constructor() {}
+  constructor(public gridControlService: GridControlService) {}
 
   ngOnInit(): void {
     this.setStateMessage();
     this.stateSubscription = this.subscribeToAppState();
+    this.algorithmResultSubscription = this.subscribeToAlgorithmResult();
+  }
+
+  public startAlgorithm() {
+    if (!this.algorithmResult && this.algorithmResult !== 0) {
+      this.gridControlService.triggerAlgorithm.emit();
+    } else {
+      CurrentAppStateService.resetAlgorithmEvent.emit();
+    }
+  }
+
+  private subscribeToAlgorithmResult(): Subscription {
+    return CurrentAppStateService.algorithmResultEvent.subscribe(
+      (response: Result) => {
+        if (response === Result.PathFound) {
+          this.stateMessage = 'Optimal path has been found!';
+          this.algorithmResult = Result.PathFound;
+        } else if (response === Result.PathNotFound) {
+          this.stateMessage =
+            'No valid path has been found for this map (try again!)';
+          this.algorithmResult = Result.PathNotFound;
+        } else {
+          this.setStateMessage();
+          this.algorithmResult = undefined;
+        }
+      }
+    );
   }
 
   private subscribeToAppState(): Subscription {
@@ -50,5 +81,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stateSubscription?.unsubscribe();
+    this.algorithmResultSubscription?.unsubscribe();
   }
 }

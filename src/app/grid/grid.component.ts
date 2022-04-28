@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Result } from '../enums/algorithm-result.enum';
 import { Appstate } from '../enums/app-state.enum';
 import { CurrentAppStateService } from '../services/current-app-state.service';
 import { GridControlService } from '../services/grid-control.service';
@@ -24,17 +25,22 @@ export class GridComponent implements OnInit, OnDestroy {
   private endNode?: Node;
   private stateSubscription?: Subscription;
   private gridSizeSubscription?: Subscription;
+  private algorithmTriggerSubscription?: Subscription;
+  private resetAlgorithmSubscription?: Subscription;
   private currentState?: Appstate;
 
   constructor(private gridControlService: GridControlService) {}
 
   ngOnInit(): void {
     this.gridSizeSubscription = this.subscribeToGridSize();
-    this.stateSubscription = this.subscribeToAppState(); // Subscribe to the app state
+    this.stateSubscription = this.subscribeToAppState();
+    this.algorithmTriggerSubscription = this.subscribeToAlgorithmEvent();
+    this.resetAlgorithmSubscription = this.subscribeToResetAlgorithmEvent();
   }
 
   private setupGrid(): void {
     this.grid = []; // Clear the grid
+    NodePositionController.gridSize = this.gridSize; // Set the grid size
     for (let nodeId = 0; nodeId < this.gridSize ** 2; nodeId++) {
       this.grid.push(
         new Node(nodeId, [
@@ -49,7 +55,7 @@ export class GridComponent implements OnInit, OnDestroy {
 
   private generateObstacles(): void {
     // Generate some random obstacles
-    for (let i = 0; i < this.gridSize ** 2 / 4; i++) {
+    for (let i = 0; i < this.gridSize ** 2 / 3; i++) {
       const randomNode =
         this.grid[Math.floor(Math.random() * this.grid.length)];
       if (randomNode.isObstacle()) {
@@ -60,12 +66,38 @@ export class GridComponent implements OnInit, OnDestroy {
     }
   }
 
+  private sendResponseToHeader(path: Node[] | null) {
+    if (path) {
+      CurrentAppStateService.algorithmResultEvent.next(Result.PathFound);
+    } else {
+      CurrentAppStateService.algorithmResultEvent.next(Result.PathNotFound);
+    }
+  }
+
   private subscribeToAppState(): Subscription {
     return CurrentAppStateService.getStateSubject().subscribe(
       (newState: Appstate) => {
         this.currentState = newState;
       }
     );
+  }
+
+  private subscribeToResetAlgorithmEvent(): Subscription {
+    return CurrentAppStateService.resetAlgorithmEvent.subscribe(() => {
+      this.resetAlgorithm();
+    });
+  }
+
+  private subscribeToAlgorithmEvent(): Subscription {
+    return this.gridControlService.triggerAlgorithm.subscribe(() => {
+      const algorithm = new AStarAlgorithm(this.grid);
+      const [path, nodesSearched] = algorithm.start(
+        this.startNode!,
+        this.endNode!
+      ) || [null, null];
+      this.sendResponseToHeader(path);
+      this.displayAllNodes(nodesSearched, path);
+    });
   }
 
   private subscribeToGridSize(): Subscription {
@@ -85,30 +117,66 @@ export class GridComponent implements OnInit, OnDestroy {
   public selectNode(node: Node): void {
     switch (this.currentState) {
       case Appstate.SelectingStartPosition:
+        if (node.isObstacle()) {
+          return;
+        }
         this.startNode = node;
         CurrentAppStateService.getStateSubject().next(
           Appstate.SelectingEndPosition
         ); // Update the app state to select the end position
         break;
       case Appstate.SelectingEndPosition:
+        if (node.isObstacle() || node.getId() === this.startNode?.getId()) {
+          return;
+        }
         this.endNode = node;
         CurrentAppStateService.getStateSubject().next(
           Appstate.AlgorithmRunning
         ); // Update the app state to run the algorithm
+        this.gridControlService.setReady(true);
         break;
       default: {
-        const algorithm = new AStarAlgorithm(this.grid);
-        const path = algorithm.start(this.startNode!, this.endNode!);
-        this.displayPath(path!);
         break;
       }
     }
   }
 
+  private resetAlgorithm() {
+    this.setupGrid();
+    CurrentAppStateService.getStateSubject().next(
+      Appstate.SelectingStartPosition
+    );
+    this.gridControlService.setReady(false);
+    CurrentAppStateService.algorithmResultEvent.next(null);
+  }
+
+  private async displayAllNodes(nodesSearched: Node[], path: Node[]) {
+    // Display searched nodes & path nodes
+    if (nodesSearched) {
+      await this.displaySearchedNodes(nodesSearched);
+    }
+    if (path) {
+      await this.displayPath(path);
+    }
+  }
+
   private async displayPath(path: Node[]) {
     for (let node of path) {
+      if (this.currentState === Appstate.SelectingStartPosition) {
+        return; // If the algorithm is reset, stop displaying the path
+      }
       this.grid[node.getId()].path = true;
-      await sleep(100);
+      await sleep(100); // just to make the animation look better
+    }
+  }
+
+  private async displaySearchedNodes(nodes: Node[]) {
+    for (let node of nodes) {
+      if (this.currentState === Appstate.SelectingStartPosition) {
+        return; // If the algorithm is reset, stop displaying the searched nodes
+      }
+      this.grid[node.getId()].searched = true;
+      await sleep(0); // just to make the animation look better
     }
   }
 
@@ -127,5 +195,7 @@ export class GridComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.stateSubscription?.unsubscribe();
     this.gridSizeSubscription?.unsubscribe();
+    this.algorithmTriggerSubscription?.unsubscribe();
+    this.resetAlgorithmSubscription?.unsubscribe();
   }
 }

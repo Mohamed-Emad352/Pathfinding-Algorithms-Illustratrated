@@ -15,7 +15,9 @@
       startNode: node === getStartNode(),
       endNode: node === getEndNode(),
       obstacleNode: node.isObstacle(),
-      pathNode: node.isOnPath()
+      pathNode: node.isOnPath(),
+      searchedNode:
+        node.isBeingSearched() && !node.isObstacle() && !node.isOnPath()
     }"
   ></div>
 </div>
