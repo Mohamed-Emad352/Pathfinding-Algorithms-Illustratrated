@@ -1,1 +1,8 @@
-<p>grid works!</p>
+<div class="grid grid-size-small">
+  <div
+    class="node"
+    id="{{ node.getId() }}"
+    *ngFor="let node of getGrid()"
+    (click)="printNode(node)"
+  ></div>
+</div>

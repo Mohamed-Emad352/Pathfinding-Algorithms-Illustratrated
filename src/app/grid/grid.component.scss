@@ -1,0 +1,11 @@
+.grid {
+  height: calc(100vh - 3.5rem - 1.2rem);
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(16, 1fr);
+
+  .node {
+    border: 1px dotted black;
+    cursor: pointer;
+  }
+}
