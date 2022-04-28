@@ -16,7 +16,7 @@ export class NodePositionController {
       this.currentX++;
     } else {
       this.currentX = 0;
-      this.currentY++;
+      this.currentY++; // If we've reached the end of the row, increment the Y position
     }
   }
 
@@ -25,7 +25,8 @@ export class NodePositionController {
     this.currentY = 0;
   }
 
-  public static setGridSize(gridSize: number): void {
+  public static set gridSize(gridSize: number) {
     this.currentGridSize = gridSize;
+    this.resetPositions(); // Reset the positions when the grid size changes
   }
 }

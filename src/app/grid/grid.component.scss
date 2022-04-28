@@ -1,11 +1,42 @@
 .grid {
-  height: calc(100vh - 3.5rem - 1.2rem);
+  height: calc(100vh - 5rem - 1.2rem);
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
-  grid-template-rows: repeat(16, 1fr);
+
+  &.grid-size-small {
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+  }
+
+  &.grid-size-medium {
+    grid-template-columns: repeat(32, 1fr);
+    grid-template-rows: repeat(32, 1fr);
+  }
+
+  &.grid-size-large {
+    grid-template-columns: repeat(64, 1fr);
+    grid-template-rows: repeat(64, 1fr);
+  }
 
   .node {
-    border: 1px dotted black;
+    border: 1px dotted #333;
     cursor: pointer;
+    transition: 150ms ease-in-out background-color;
+
+    &.startNode {
+      background-color: lightgreen;
+    }
+
+    &.endNode {
+      background-color: #fb8500 !important;
+    }
+
+    &.obstacleNode {
+      background-color: #333333;
+    }
+
+    &.pathNode {
+      background-color: #67a6ba;
+      border: none;
+    }
   }
 }

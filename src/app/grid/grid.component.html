@@ -1,8 +1,21 @@
-<div class="grid grid-size-small">
+<div
+  class="grid"
+  [ngClass]="{
+    'grid-size-small': getGridSize() === 16,
+    'grid-size-medium': getGridSize() === 32,
+    'grid-size-large': getGridSize() === 64
+  }"
+>
   <div
     class="node"
     id="{{ node.getId() }}"
     *ngFor="let node of getGrid()"
-    (click)="printNode(node)"
+    (click)="selectNode(node)"
+    [ngClass]="{
+      startNode: node === getStartNode(),
+      endNode: node === getEndNode(),
+      obstacleNode: node.isObstacle(),
+      pathNode: node.isOnPath()
+    }"
   ></div>
 </div>
