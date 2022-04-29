@@ -28,6 +28,8 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 - Yellow node: Node that has been visited
 
+- Black node: Obstacle node
+
 ## Live Demo
 [See live demo here](https://a-star-algorithm-illustration.web.app)
 
