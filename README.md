@@ -1,4 +1,4 @@
-# AStarAlgorithmIllustration
+# A* Search Algorithm Illustration
 
 Web application demonstrating how A* pathfinding search algorithm works to find the shortest path between 2 nodes without hitting any of the obstacles.
 
