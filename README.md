@@ -2,11 +2,34 @@
 
 Web application demonstrating how A* pathfinding search algorithm works to find the shortest path between 2 nodes without hitting any of the obstacles.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
+### The way the A* algorithm works:
+1- It starts from the start node with a distance cost of 0.
 
+2- It then gets the heuristic cost between the node and the goal node (here 'Manhattan Distance' is used).
+
+3- Then adds the node to a priority queue with a priority equals to distance cost + heuristic cost.
+
+4- Explores the neighbors of the node and gets the neighbor with the least total cost (distance + heuristic cost)
+
+5- Push the least cost neighbor to the priority queue
+
+6- Mark the parent node itself as 'visited'
+
+7- Loop till the priority queue is empty
 
 ![alt text](https://i.ibb.co/w7tjMrF/screen-capture.gif)
 
+## Legend
+- Green node: Start node
+
+- Orange node: End node
+
+- Blue node: Path node
+
+- Yellow node: Node that has been visited
+
+## Get Started
+Clone the repository and run 'npm install'
 
 ## Development server
 
