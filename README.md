@@ -4,6 +4,10 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
 
+
+![alt text](https://i.ibb.co/w7tjMrF/screen-capture.gif)
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
