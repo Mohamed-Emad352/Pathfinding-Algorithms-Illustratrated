@@ -1,5 +1,7 @@
 # AStarAlgorithmIllustration
 
+Web application demonstrating how A* pathfinding search algorithm works to find the shortest path between 2 nodes without hitting any of the obstacles.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
 
 ## Development server
