@@ -30,7 +30,7 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 - Black node: Obstacle node
 
-## Grid sized available:
+## Grid sizes available:
 - 16x16 (256 node)
 
 - 32x32 (1024 node)
