@@ -1,22 +1,30 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AStarAlgorithm } from '../grid/models/A-star-algorithm';
 import { Node } from '../grid/models/node.model';
 
-const GRID_SIZE_SMALL = 16;
-const GRID_SIZE_MEDIUM = 32;
-const GRID_SIZE_LARGE = 64;
+export const GRID_SIZE_SMALL = 16;
+export const GRID_SIZE_MEDIUM = 32;
+export const GRID_SIZE_LARGE = 64;
 
 @Injectable({
   providedIn: 'root',
 })
 export class GridControlService {
-  private gridSizeSubject = new BehaviorSubject<number>(GRID_SIZE_MEDIUM);
+  private gridSizeSubject = new BehaviorSubject<{ [key: string]: number }>({
+    size: GRID_SIZE_SMALL,
+    obstaclesNum: GRID_SIZE_SMALL ** 2 / 3,
+  });
   private ready: boolean = false;
+  private drawingEventTriggered = new Subject<boolean>();
   public triggerAlgorithm = new EventEmitter<any>();
 
-  public getGridSizeSubject(): BehaviorSubject<number> {
+  public getGridSizeSubject(): BehaviorSubject<{ [key: string]: number }> {
     return this.gridSizeSubject;
+  }
+
+  public getDrawingEventTriggered(): Subject<boolean> {
+    return this.drawingEventTriggered;
   }
 
   public runAlgorithm(grid: Node[], positions: Node[]): Node[] | null {

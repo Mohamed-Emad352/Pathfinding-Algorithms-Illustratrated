@@ -26,6 +26,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public startAlgorithm() {
+    if (this.currentState === Appstate.DrawingObstacles) {
+      this.gridControlService.getDrawingEventTriggered().next(false);
+      CurrentAppStateService.getStateSubject().next(
+        CurrentAppStateService.getlastKnownStateBeforeDrawingObstacles()!
+      );
+      return;
+    }
     if (!this.algorithmResult && this.algorithmResult !== 0) {
       this.gridControlService.triggerAlgorithm.emit();
     } else {
@@ -74,8 +81,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       case Appstate.AlgorithmFinished:
         this.stateMessage = 'The algorithm has finished!';
         break;
+      case Appstate.DrawingObstacles:
+        this.stateMessage = 'Click and hold over the grid to draw obstacles!';
+        break;
       default:
         this.stateMessage = '';
+    }
+  }
+
+  public getCurrentState(): Appstate | undefined {
+    return this.currentState;
+  }
+
+  public getButtonText(): string {
+    if (this.currentState === Appstate.DrawingObstacles) return 'Finish';
+    else if (this.algorithmResult === 0 || this.algorithmResult === 1) {
+      return 'Reset';
+    } else {
+      return 'Start!';
     }
   }
 

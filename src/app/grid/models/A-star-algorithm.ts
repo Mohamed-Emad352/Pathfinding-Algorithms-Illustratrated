@@ -1,4 +1,3 @@
-import { GridControlService } from 'src/app/services/grid-control.service';
 import { Node } from './node.model';
 import { PriorityQueue } from './priority-queue.model';
 
@@ -41,9 +40,8 @@ export class AStarAlgorithm {
         }
         const newCost = nodeCosts[currentNode.getId()] + NODE_COST;
         if (
-          (!nodeCosts[neighbor.getId()] ||
-            newCost < nodeCosts[neighbor.getId()]) &&
-          !neighbor.isObstacle()
+          !nodeCosts[neighbor.getId()] ||
+          newCost < nodeCosts[neighbor.getId()]
         ) {
           // Update the cost of the neighbor
           nodeCosts[neighbor.getId()] = newCost;
@@ -110,10 +108,10 @@ export class AStarAlgorithm {
   }
 
   private filterNeighbors(nodes: (Node | undefined)[]): Node[] {
-    // Filter out undefined nodes
+    // Filter out undefined nodes / obstacle nodes
     const neighbors: Node[] = [];
     nodes.forEach((node: Node | undefined) => {
-      if (node) {
+      if (node && !node.isObstacle()) {
         neighbors.push(node);
       }
     });

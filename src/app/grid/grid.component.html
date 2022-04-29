@@ -11,6 +11,8 @@
     id="{{ node.getId() }}"
     *ngFor="let node of getGrid()"
     (click)="selectNode(node)"
+    (mouseenter)="isDrawObstaclesMode ? drawObstacle($event, node) : null"
+    (mousedown)="isDrawObstaclesMode ? drawObstacle($event, node) : null"
     [ngClass]="{
       startNode: node === getStartNode(),
       endNode: node === getEndNode(),

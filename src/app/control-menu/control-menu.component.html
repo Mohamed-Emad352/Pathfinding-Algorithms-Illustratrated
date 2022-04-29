@@ -1,1 +1,54 @@
-<p>control-menu works!</p>
+<div class="container" #menu [ngClass]="{ opened: isOpen }">
+  <div class="title" (click)="!isOpen ? openMenu() : closeMenu()">
+    <p>{{ !isOpen ? "Open menu" : "Close menu" }}</p>
+    <img *ngIf="!isOpen" width="20" src="../../assets/angles-up-solid.svg" />
+    <img *ngIf="isOpen" width="20" src="../../assets/angles-down-solid.svg" />
+  </div>
+  <div class="flex">
+    <div class="content">
+      <h3>Grid size:</h3>
+      <input
+        type="radio"
+        checked
+        name="size"
+        (click)="obstacles.value = '85'"
+        id="small"
+        #sizeSmall
+        value="small"
+      />
+      <label for="small">Small (16x16)</label> <br />
+      <input
+        type="radio"
+        (click)="obstacles.value = '341'"
+        name="size"
+        id="medium"
+        #sizeMedium
+        value="medium"
+      />
+      <label for="medium">Medium (32x32)</label> <br />
+      <input
+        type="radio"
+        (click)="obstacles.value = '1365'"
+        name="size"
+        id="large"
+        #sizeLarge
+        value="large"
+      />
+      <label for="large">Large (64x64)</label>
+      <h3 style="margin-bottom: 10px">Number of obstacles:</h3>
+      <input
+        #obstacles
+        [value]="'85'"
+        type="number"
+        min="0"
+        style="text-align: center"
+      />
+    </div>
+    <div class="buttons">
+      <button class="apply" (click)="applySettings()">Apply</button>
+      <button class="set-obstacles" (click)="startDrawingObstacles()">
+        Draw obstacles manually
+      </button>
+    </div>
+  </div>
+</div>

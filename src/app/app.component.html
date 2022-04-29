@@ -1,3 +1,7 @@
 <app-header></app-header>
 <app-grid></app-grid>
-<app-control-menu></app-control-menu>
+<app-control-menu
+  (toggleMenu)="toggleOverlay()"
+  (removeOverlay)="removeOverlay()"
+></app-control-menu>
+<div #overlay *ngIf="isOverlayed" class="dark-overlay"></div>

@@ -35,6 +35,7 @@ header {
     border: none;
     border-radius: 0.2rem;
     transition: 150ms ease-in-out background-color;
+    font-size: 1rem;
 
     &:disabled {
       cursor: not-allowed;
@@ -43,6 +44,12 @@ header {
 
     &:hover {
       background-color: #f0c14a;
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 3rem;
+      height: 2rem;
+      transform: translateY(1.2rem);
     }
   }
 }

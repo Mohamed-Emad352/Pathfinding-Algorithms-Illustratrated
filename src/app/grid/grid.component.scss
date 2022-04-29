@@ -1,5 +1,5 @@
 .grid {
-  height: calc(100vh - 5rem - 1.2rem);
+  height: calc(100vh - 5rem - 2.1rem);
   display: grid;
 
   &.grid-size-small {
@@ -19,6 +19,7 @@
 
   .node {
     cursor: pointer;
+    user-select: none;
     transition: 150ms ease-in-out background-color;
 
     &.startNode {

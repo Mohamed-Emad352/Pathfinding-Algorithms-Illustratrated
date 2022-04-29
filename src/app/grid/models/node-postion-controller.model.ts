@@ -29,4 +29,8 @@ export class NodePositionController {
     this.currentGridSize = gridSize;
     this.resetPositions(); // Reset the positions when the grid size changes
   }
+
+  public static get gridSize(): number {
+    return this.currentGridSize;
+  }
 }

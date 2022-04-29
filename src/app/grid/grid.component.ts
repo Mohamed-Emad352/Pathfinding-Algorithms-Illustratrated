@@ -27,7 +27,10 @@ export class GridComponent implements OnInit, OnDestroy {
   private gridSizeSubscription?: Subscription;
   private algorithmTriggerSubscription?: Subscription;
   private resetAlgorithmSubscription?: Subscription;
+  private drawObstaclesSubscription?: Subscription;
   private currentState?: Appstate;
+  private lastObstaclesNum?: number; // Save the obstacles number for using again after resetting the grid
+  public isDrawObstaclesMode: boolean = false;
 
   constructor(private gridControlService: GridControlService) {}
 
@@ -36,9 +39,10 @@ export class GridComponent implements OnInit, OnDestroy {
     this.stateSubscription = this.subscribeToAppState();
     this.algorithmTriggerSubscription = this.subscribeToAlgorithmEvent();
     this.resetAlgorithmSubscription = this.subscribeToResetAlgorithmEvent();
+    this.drawObstaclesSubscription = this.subscribeToDrawingObstaclesSubject();
   }
 
-  private setupGrid(): void {
+  private setupGrid(obstacleNum: number): void {
     this.grid = []; // Clear the grid
     NodePositionController.gridSize = this.gridSize; // Set the grid size
     for (let nodeId = 0; nodeId < this.gridSize ** 2; nodeId++) {
@@ -50,20 +54,25 @@ export class GridComponent implements OnInit, OnDestroy {
       );
       NodePositionController.incrementPosition();
     }
-    this.generateObstacles();
+    this.generateObstacles(obstacleNum);
   }
 
-  private generateObstacles(): void {
+  private generateObstacles(
+    obstaclesNum: number = this.gridSize ** 2 / 3
+  ): void {
     // Generate some random obstacles
-    for (let i = 0; i < this.gridSize ** 2 / 3; i++) {
+    const obstaclesIndices: number[] = [];
+    while (obstaclesIndices.length < obstaclesNum) {
       const randomNode =
         this.grid[Math.floor(Math.random() * this.grid.length)];
-      if (randomNode.isObstacle()) {
-        i--;
-        continue;
+      if (obstaclesIndices.indexOf(randomNode.getId()) === -1) {
+        // ID === Index
+        obstaclesIndices.push(randomNode.getId());
       }
-      randomNode.obstacle = true;
     }
+    obstaclesIndices.forEach((obstacleId: number) => {
+      this.grid[obstacleId].obstacle = true;
+    });
   }
 
   private sendResponseToHeader(path: Node[] | null) {
@@ -72,6 +81,19 @@ export class GridComponent implements OnInit, OnDestroy {
     } else {
       CurrentAppStateService.algorithmResultEvent.next(Result.PathNotFound);
     }
+  }
+
+  private subscribeToDrawingObstaclesSubject(): Subscription {
+    return this.gridControlService
+      .getDrawingEventTriggered()
+      .subscribe((val: boolean) => {
+        this.isDrawObstaclesMode = val;
+        if (val) {
+          CurrentAppStateService.getStateSubject().next(
+            Appstate.DrawingObstacles
+          );
+        }
+      });
   }
 
   private subscribeToAppState(): Subscription {
@@ -103,10 +125,21 @@ export class GridComponent implements OnInit, OnDestroy {
   private subscribeToGridSize(): Subscription {
     return this.gridControlService
       .getGridSizeSubject()
-      .subscribe((newSize: number) => {
-        this.gridSize = newSize;
-        NodePositionController.gridSize = newSize;
-        this.setupGrid();
+      .subscribe((sizesObject: { [key: string]: number }) => {
+        // sizesObject is an object with the keys 'size' and 'obstaclesNum'
+        this.gridSize = sizesObject['size'];
+        NodePositionController.gridSize = sizesObject['size'];
+        if (sizesObject['obstaclesNum'] > sizesObject['size'] ** 2) {
+          sizesObject['obstaclesNum'] = sizesObject['size'] ** 2;
+        }
+        this.setupGrid(sizesObject['obstaclesNum']);
+        this.lastObstaclesNum = sizesObject['obstaclesNum'];
+        CurrentAppStateService.getStateSubject().next(
+          Appstate.SelectingStartPosition
+        );
+        // Reset the algorithm state to stop animation in between grid change
+        this.gridControlService.setReady(false);
+        CurrentAppStateService.algorithmResultEvent.next(null);
       });
   }
 
@@ -115,6 +148,10 @@ export class GridComponent implements OnInit, OnDestroy {
   }
 
   public selectNode(node: Node): void {
+    if (this.isDrawObstaclesMode) {
+      // If the user is drawing obstacles, don't select a node
+      return;
+    }
     switch (this.currentState) {
       case Appstate.SelectingStartPosition:
         if (node.isObstacle()) {
@@ -142,7 +179,11 @@ export class GridComponent implements OnInit, OnDestroy {
   }
 
   private resetAlgorithm() {
-    this.setupGrid();
+    // if there were no specific obastacles number set before, use the standard one
+    // otherwise, use the last one
+    this.setupGrid(
+      this.lastObstaclesNum ? this.lastObstaclesNum : this.gridSize ** 2 / 3
+    );
     CurrentAppStateService.getStateSubject().next(
       Appstate.SelectingStartPosition
     );
@@ -192,10 +233,22 @@ export class GridComponent implements OnInit, OnDestroy {
     return this.gridSize;
   }
 
+  public drawObstacle(event: MouseEvent, node: Node): void {
+    if (
+      !this.isDrawObstaclesMode ||
+      node.getId() === this.startNode?.getId() ||
+      node.getId() === this.endNode?.getId()
+    ) {
+      return;
+    }
+    if (event.buttons === 1) this.grid[node.getId()].obstacle = true;
+  }
+
   ngOnDestroy(): void {
     this.stateSubscription?.unsubscribe();
     this.gridSizeSubscription?.unsubscribe();
     this.algorithmTriggerSubscription?.unsubscribe();
     this.resetAlgorithmSubscription?.unsubscribe();
+    this.drawObstaclesSubscription?.unsubscribe();
   }
 }

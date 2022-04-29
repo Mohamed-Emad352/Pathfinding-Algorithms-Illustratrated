@@ -6,9 +6,12 @@
   >
     {{ stateMessage }}
   </p>
-  <button [disabled]="!gridControlService.isReady()" (click)="startAlgorithm()">
+  <button
+    [disabled]="!gridControlService.isReady() && !(getCurrentState() === 4)"
+    (click)="startAlgorithm()"
+  >
     <!-- Check whether to start the algorithm if not started
       or reset it if it has already been started -->
-    {{ algorithmResult === 0 || algorithmResult === 1 ? "Reset" : "Start" }}
+    {{ getButtonText() }}
   </button>
 </header>
