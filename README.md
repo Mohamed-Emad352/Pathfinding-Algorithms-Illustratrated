@@ -30,6 +30,14 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 - Black node: Obstacle node
 
+## Grid sized available:
+- 16x16 (256 node)
+
+- 32x32 (1024 node)
+
+- 64x64 (4096 node - may cause lagging)
+
+
 ## Live Demo
 [See live demo here](https://a-star-algorithm-illustration.web.app)
 
