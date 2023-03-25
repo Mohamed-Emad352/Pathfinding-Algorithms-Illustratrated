@@ -1,6 +1,48 @@
-# AStarAlgorithmIllustration
+# A* Search Algorithm Illustration
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.2.
+Web application demonstrating how A* pathfinding search algorithm works to find the shortest path between 2 nodes without hitting any of the obstacles.
+
+### The way the A* algorithm works:
+1- It starts from the start node with a distance cost of 0.
+
+2- It then gets the heuristic cost between the node and the goal node (here 'Manhattan Distance' is used).
+
+3- Then adds the node to a priority queue with a priority equals to distance cost + heuristic cost.
+
+4- Explores the neighbors of the node and gets the neighbor with the least total cost (distance + heuristic cost)
+
+5- Push the least cost neighbor to the priority queue
+
+6- Mark the parent node itself as 'visited'
+
+7- Loop till the priority queue is empty
+
+![alt text](https://i.ibb.co/w7tjMrF/screen-capture.gif)
+
+## Legend
+- Green node: Start node
+
+- Orange node: End node
+
+- Blue node: Path node
+
+- Yellow node: Node that has been visited
+
+- Black node: Obstacle node
+
+## Grid sizes available:
+- 16x16 (256 node)
+
+- 32x32 (1024 node)
+
+- 64x64 (4096 node - may cause lagging)
+
+
+## Live Demo
+[See live demo here](https://a-star-algorithm-illustration.web.app)
+
+## Get Started
+Clone the repository and run 'npm install'
 
 ## Development server
 
@@ -21,7 +63,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
