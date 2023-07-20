@@ -4,6 +4,7 @@ export class Node {
   private obstacleNode: boolean;
   private pathNode: boolean;
   private isSearched: boolean = false;
+
   constructor(private id: number, position: number[]) {
     this.X = position[0];
     this.Y = position[1];

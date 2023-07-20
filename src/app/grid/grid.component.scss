@@ -21,6 +21,7 @@
     cursor: pointer;
     user-select: none;
     transition: 150ms ease-in-out background-color;
+    border: 1px solid #00000020;
 
     &.startNode {
       background-color: #24b424 !important;

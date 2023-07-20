@@ -71,8 +71,8 @@ export class ControlMenuComponent implements OnInit, OnDestroy {
     this.renderer.addClass(this.menu!.nativeElement, 'closing');
     this.removeOverlay.emit();
     setTimeout(() => {
-      this.toggleMenu.emit();
       this.renderer.removeClass(this.menu!.nativeElement, 'closing');
+      this.toggleMenu.emit();
     }, 500);
   }
 

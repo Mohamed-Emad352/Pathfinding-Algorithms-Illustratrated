@@ -12,4 +12,8 @@
 
 html {
   font-size: calc(0.4vw + 0.7em);
+
+  body {
+    position: relative;
+  }
 }
