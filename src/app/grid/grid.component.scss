@@ -38,9 +38,35 @@
 
     &.pathNode {
       background-color: #d9d9d9;
+      animation: upAndDown2 200ms ease-in-out;
     }
     &.searchedNode {
       background-color: #0096c7;
+      animation: upAndDown 200ms ease-in-out;
     }
+  }
+}
+
+@keyframes upAndDown {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 10px);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes upAndDown2 {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 10px);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
   }
 }
