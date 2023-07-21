@@ -56,41 +56,6 @@
         }
       }
     }
-
-    .buttons {
-      display: flex;
-      flex-direction: column;
-
-      button {
-        border: none;
-        border-radius: 0.25rem;
-        transition: 150ms ease-in-out;
-
-        &:active {
-          transform: scale(0.98);
-        }
-
-        &:nth-child(1) {
-          margin-bottom: 1rem;
-          background-color: #c49b34;
-
-          &:hover {
-            background-color: lighten($color: #c49b34, $amount: 5);
-          }
-        }
-        padding: 1rem;
-        cursor: pointer;
-
-        &:nth-child(2) {
-          background-color: #333;
-          color: white;
-
-          &:hover {
-            background-color: lighten($color: #333, $amount: 5);
-          }
-        }
-      }
-    }
   }
 
   input[type="number"] {
@@ -108,6 +73,36 @@
     color: white;
     flex-grow: 1;
     font-size: 1rem;
+  }
+
+  button {
+    border: none;
+    border-radius: 0.25rem;
+    transition: 150ms ease-in-out;
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:nth-child(1) {
+      margin-bottom: 1rem;
+      background-color: #c49b34;
+
+      &:hover {
+        background-color: lighten($color: #c49b34, $amount: 5);
+      }
+    }
+    padding: 1rem;
+    cursor: pointer;
+
+    &:nth-child(2) {
+      background-color: #333;
+      color: white;
+
+      &:hover {
+        background-color: lighten($color: #333, $amount: 5);
+      }
+    }
   }
 
   .title {
