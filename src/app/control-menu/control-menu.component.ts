@@ -33,6 +33,7 @@ export class ControlMenuComponent implements OnInit, OnDestroy {
   @ViewChild('menu') menu?: ElementRef;
   @ViewChild('obstacles') obstaclesNum?: ElementRef;
   @ViewChild('sizeSmall') radioSmall?: ElementRef;
+  @ViewChild('obstacles') obstaclesInput?: ElementRef;
   @ViewChild('sizeMedium') radioMedium?: ElementRef;
   @ViewChild('sizeLarge') radioLarge?: ElementRef;
 
@@ -46,9 +47,9 @@ export class ControlMenuComponent implements OnInit, OnDestroy {
   }
 
   private getSelectedSize(): number {
-    if (this.radioSmall?.nativeElement.checked) {
+    if (this.radioSmall?.nativeElement.classList.contains('selected')) {
       return GRID_SIZE_SMALL;
-    } else if (this.radioMedium?.nativeElement.checked) {
+    } else if (this.radioMedium?.nativeElement.classList.contains('selected')) {
       return GRID_SIZE_MEDIUM;
     } else {
       return GRID_SIZE_LARGE;
@@ -74,6 +75,14 @@ export class ControlMenuComponent implements OnInit, OnDestroy {
       this.renderer.removeClass(this.menu!.nativeElement, 'closing');
       this.toggleMenu.emit();
     }, 500);
+  }
+
+  public onGridSizeChange(val: string, el: any): void {
+    this.renderer.removeClass(this.radioSmall?.nativeElement, 'selected');
+    this.renderer.removeClass(this.radioLarge?.nativeElement, 'selected');
+    this.renderer.removeClass(this.radioMedium?.nativeElement, 'selected');
+    this.renderer.addClass(el, 'selected');
+    this.obstaclesInput!.nativeElement.value = val;
   }
 
   public applySettings(): void {

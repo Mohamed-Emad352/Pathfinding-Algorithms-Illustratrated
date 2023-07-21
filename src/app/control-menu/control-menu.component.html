@@ -1,13 +1,34 @@
 <div class="container" #menu [ngClass]="{ opened: isOpen }">
   <div class="title" (click)="!isOpen ? openMenu() : closeMenu()">
-    <p>{{ !isOpen ? "Open menu" : "Close menu" }}</p>
-    <img *ngIf="!isOpen" width="20" src="../../assets/angles-up-solid.svg" />
-    <img *ngIf="isOpen" width="20" src="../../assets/angles-down-solid.svg" />
+    <img src="../../assets/menu-icon.png" alt="" />
   </div>
   <div class="flex">
     <div class="content">
-      <h3>Grid size:</h3>
-      <input
+      <p class="pb-2 p-large">Grid size:</p>
+      <div class="row">
+        <div
+          class="selection-box"
+          #sizeSmall
+          (click)="onGridSizeChange('85', sizeSmall)"
+        >
+          <p>Small</p>
+        </div>
+        <div
+          class="selection-box selected"
+          #sizeMedium
+          (click)="onGridSizeChange('341', sizeMedium)"
+        >
+          <p>Medium</p>
+        </div>
+        <div
+          class="selection-box"
+          #sizeLarge
+          (click)="onGridSizeChange('1365', sizeLarge)"
+        >
+          <p>Large</p>
+        </div>
+      </div>
+      <!-- <input
         type="radio"
         checked
         name="size"
@@ -33,12 +54,13 @@
         id="large"
         #sizeLarge
         value="large"
-      />
+      />-->
+
       <label for="large">Large (64x64)</label>
       <h3 style="margin-bottom: 10px">Number of obstacles:</h3>
       <input
         #obstacles
-        [value]="'85'"
+        [value]="'341'"
         type="number"
         min="0"
         style="text-align: center"
