@@ -1,3 +1,4 @@
+import { GridHelper } from './grid-helper';
 import { Node } from './node.model';
 import { PriorityQueue } from './priority-queue.model';
 
@@ -5,8 +6,10 @@ const NODE_COST = 1;
 
 export class AStarAlgorithm {
   private graph: { [key: string]: Node[] } = {};
+  private gridHelper: GridHelper;
 
   constructor(private grid: Node[]) {
+    this.gridHelper = new GridHelper(grid);
     this.constructGraph();
   }
 
@@ -30,7 +33,7 @@ export class AStarAlgorithm {
         // We found the goal node
         return [this.getPath(nodeParents, startNode, endNode), nodesSearched];
       }
-      const neighbors = this.getNeighbors(currentNode); // Get the neighbors of the current node
+      const neighbors = this.gridHelper.getNeighbors(currentNode); // Get the neighbors of the current node
       neighbors.forEach(async (neighbor) => {
         // if neighbor is not in nodesSearched, push it to nodesSearched
         if (
@@ -66,7 +69,9 @@ export class AStarAlgorithm {
     let currentNode = endNode;
     while (currentNode.getId() !== startNode.getId()) {
       path.push(currentNode);
-      currentNode = this.findNodeById(nodeParents[currentNode.getId()])!;
+      currentNode = this.gridHelper.findNodeById(
+        nodeParents[currentNode.getId()]
+      )!;
     }
     return path.reverse();
   }
@@ -81,52 +86,8 @@ export class AStarAlgorithm {
 
   private constructGraph(): void {
     this.grid.forEach((node: Node) => {
-      const neighbors: Node[] = this.getNeighbors(node);
+      const neighbors: Node[] = this.gridHelper.getNeighbors(node);
       this.graph[node.getId()] = neighbors;
     });
-  }
-
-  private getNeighbors(node: Node): Node[] {
-    // Get the neighbors of the node
-    const downNode: Node | undefined = this.findNodeByPosition([
-      node.getX(),
-      node.getY() - 1,
-    ]);
-    const upNode: Node | undefined = this.findNodeByPosition([
-      node.getX(),
-      node.getY() + 1,
-    ]);
-    const leftNode: Node | undefined = this.findNodeByPosition([
-      node.getX() - 1,
-      node.getY(),
-    ]);
-    const rightNode: Node | undefined = this.findNodeByPosition([
-      node.getX() + 1,
-      node.getY(),
-    ]);
-    return this.filterNeighbors([downNode, upNode, leftNode, rightNode]);
-  }
-
-  private filterNeighbors(nodes: (Node | undefined)[]): Node[] {
-    // Filter out undefined nodes / obstacle nodes
-    const neighbors: Node[] = [];
-    nodes.forEach((node: Node | undefined) => {
-      if (node && !node.isObstacle()) {
-        neighbors.push(node);
-      }
-    });
-    return neighbors;
-  }
-
-  private findNodeByPosition(positions: number[]): Node | undefined {
-    // Search for a node by its position
-    return this.grid.find((node: Node) => {
-      return node.getX() === positions[0] && node.getY() === positions[1];
-    });
-  }
-
-  private findNodeById(id: number): Node | undefined {
-    // Get for a node by its id
-    return this.grid[id];
   }
 }
