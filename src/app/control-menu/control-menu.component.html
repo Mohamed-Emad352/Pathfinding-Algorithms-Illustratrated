@@ -2,69 +2,46 @@
   <div class="title" (click)="!isOpen ? openMenu() : closeMenu()">
     <img src="../../assets/menu-icon.png" alt="" />
   </div>
-  <div class="flex">
+  <div class="flex flex--space-around">
     <div class="content">
-      <p class="pb-2 p-large">Grid size:</p>
-      <div class="row">
-        <div
-          class="selection-box"
-          #sizeSmall
-          (click)="onGridSizeChange('85', sizeSmall)"
-        >
-          <p>Small</p>
+      <div class="flex flex--column w-100" style="max-width: 17.5rem">
+        <div class="mb-2 w-100">
+          <p class="pb-2 p-large">Grid size:</p>
+          <div class="row justify-space-between">
+            <div
+              class="selection-box"
+              #sizeSmall
+              (click)="onGridSizeChange('85', sizeSmall)"
+            >
+              <p>Small</p>
+            </div>
+            <div
+              class="selection-box selected"
+              #sizeMedium
+              (click)="onGridSizeChange('341', sizeMedium)"
+            >
+              <p>Medium</p>
+            </div>
+            <div
+              class="selection-box"
+              #sizeLarge
+              (click)="onGridSizeChange('1365', sizeLarge)"
+            >
+              <p>Large</p>
+            </div>
+          </div>
         </div>
-        <div
-          class="selection-box selected"
-          #sizeMedium
-          (click)="onGridSizeChange('341', sizeMedium)"
-        >
-          <p>Medium</p>
-        </div>
-        <div
-          class="selection-box"
-          #sizeLarge
-          (click)="onGridSizeChange('1365', sizeLarge)"
-        >
-          <p>Large</p>
+        <div class="flex w-100">
+          <p class="p-large mr-1">Obstacles:</p>
+          <input
+            #obstacles
+            [value]="'341'"
+            type="number"
+            min="0"
+            style="text-align: center"
+          />
         </div>
       </div>
-      <!-- <input
-        type="radio"
-        checked
-        name="size"
-        (click)="obstacles.value = '85'"
-        id="small"
-        #sizeSmall
-        value="small"
-      />
-      <label for="small">Small (16x16)</label> <br />
-      <input
-        type="radio"
-        (click)="obstacles.value = '341'"
-        name="size"
-        id="medium"
-        #sizeMedium
-        value="medium"
-      />
-      <label for="medium">Medium (32x32)</label> <br />
-      <input
-        type="radio"
-        (click)="obstacles.value = '1365'"
-        name="size"
-        id="large"
-        #sizeLarge
-        value="large"
-      />-->
-
-      <label for="large">Large (64x64)</label>
-      <h3 style="margin-bottom: 10px">Number of obstacles:</h3>
-      <input
-        #obstacles
-        [value]="'341'"
-        type="number"
-        min="0"
-        style="text-align: center"
-      />
     </div>
     <div class="buttons">
       <button class="apply" (click)="applySettings()">Apply</button>
