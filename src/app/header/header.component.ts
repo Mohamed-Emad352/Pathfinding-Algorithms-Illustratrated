@@ -93,12 +93,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this.currentState;
   }
 
-  public getButtonText(): string {
-    if (this.currentState === Appstate.DrawingObstacles) return 'Finish';
+  public canStart(): boolean {
+    if (this.currentState === Appstate.DrawingObstacles) return false;
     else if (this.algorithmResult === 0 || this.algorithmResult === 1) {
-      return 'Reset';
+      return false;
     } else {
-      return 'Start!';
+      return true;
     }
   }
 

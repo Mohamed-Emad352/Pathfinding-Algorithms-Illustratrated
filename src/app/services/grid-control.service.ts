@@ -12,8 +12,8 @@ export const GRID_SIZE_LARGE = 64;
 })
 export class GridControlService {
   private gridSizeSubject = new BehaviorSubject<{ [key: string]: number }>({
-    size: GRID_SIZE_SMALL,
-    obstaclesNum: GRID_SIZE_SMALL ** 2 / 3,
+    size: GRID_SIZE_MEDIUM,
+    obstaclesNum: GRID_SIZE_MEDIUM ** 2 / 3,
   });
   private ready: boolean = false;
   private drawingEventTriggered = new Subject<boolean>();

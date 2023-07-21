@@ -12,6 +12,13 @@
   >
     <!-- Check whether to start the algorithm if not started
       or reset it if it has already been started -->
-    {{ getButtonText() }}
+    <img
+      *ngIf="canStart(); else pauseImage"
+      src="../../assets/play-icon.png"
+      alt=""
+    />
+    <ng-template #pauseImage>
+      <img src="../../assets/pause-icon.png" alt="" />
+    </ng-template>
   </button>
 </header>

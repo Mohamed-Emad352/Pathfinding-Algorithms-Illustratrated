@@ -1,7 +1,7 @@
 export class NodePositionController {
   private static currentX = 0;
   private static currentY = 0;
-  private static currentGridSize = 16;
+  private static currentGridSize = 32;
 
   public static getX(): number {
     return this.currentX;
