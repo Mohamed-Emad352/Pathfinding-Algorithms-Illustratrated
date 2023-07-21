@@ -98,5 +98,7 @@
       }
     }
   },
-  "defaultProject": "A_star-Algorithm-Illustration"
+  "cli": {
+    "analytics": false
+  }
 }
