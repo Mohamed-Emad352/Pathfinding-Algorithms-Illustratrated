@@ -20,7 +20,7 @@ A* is an informed searching algorithm that can use coordinates to determine wher
 
 7- Loop till the priority queue is empty
 
-![alt text](https://i.ibb.co/s3253CJ/ezgif-4-f4d636835c.gif)
+![alt text](https://i.ibb.co/sttRd3n/ezgif-2-225acda74b.gif)
 
 
 ## BFS Algorithm
@@ -58,7 +58,7 @@ DFS is another type of uninformed searching algorithms. It searches blindly, but
 
 4- Recursion will continue until a path is found or all calls return (meaning all nodes are visited and no path is valid).
 
-![alt text](https://i.ibb.co/HPBkZsf/ezgif-4-6701804219.gif)
+![alt text](https://i.ibb.co/JBdQncS/ezgif-2-5c4228cd35.gif)
 
 
 ## Legend
