@@ -50,6 +50,15 @@
       display: flex;
       margin-bottom: 2rem;
     }
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(2, 15rem) !important;
+    }
+
+    @media screen and (max-width: 426px) {
+      width: 25rem;
+      grid-template-columns: repeat(1, 15rem) !important;
+      margin: auto;
+    }
   }
 
   input[type="number"] {
@@ -100,6 +109,14 @@
       bottom: 30px;
       right: 30px;
       border-radius: 50%;
+      @media screen and (max-width: 426px) {
+        right: -1.2rem;
+        bottom: 20px;
+      }
+      @media screen and (max-width: 340px) {
+        right: 0rem;
+        bottom: 0px;
+      }
     }
   }
 
@@ -114,7 +131,7 @@
     }
     .ng-select.algorithm-dropdown .ng-select-container {
       cursor: pointer;
-      width: 17.5rem;
+      width: 100%;
       background-color: #03045e;
       border: none;
       outline: none;
@@ -155,6 +172,9 @@
   }
 
   &.opened {
+    @media screen and (max-width: 426px) {
+      height: 450px;
+    }
     height: 400px;
     z-index: 20;
   }
@@ -172,9 +192,16 @@
   }
 
   .copyright {
-    margin-top: 1vw;
+    position: absolute;
+    bottom: 0.25rem;
+    left: 0;
+    right: 0;
+    margin: auto;
     text-align: center;
     font-size: 0.9rem;
     color: #737373;
+    @media screen and (max-width: 426px) {
+      bottom: -3rem;
+    }
   }
 }
