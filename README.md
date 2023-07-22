@@ -24,7 +24,7 @@ A* is an informed searching algorithm that can use coordinates to determine wher
 
 
 ## BFS Algorithm
-BFS unline A* is an uninformed searching algoritm. It searches blindly level by level till its reaches the goal node. Although it is slower than A* in most cases, it is guaranteed to find the shortest path.
+BFS unlike A* is an uninformed searching algoritm. It searches blindly level by level till its reaches the goal node. Although it is slower than A* in most cases, it is guaranteed to find the shortest path.
 
 ### The way the BFS algorithm works:
 1- It starts from the start node and adds it in a queue.
