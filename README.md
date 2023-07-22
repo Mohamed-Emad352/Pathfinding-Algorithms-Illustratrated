@@ -1,6 +1,9 @@
-# A* Search Algorithm Illustration
+# Pathfinding Search Algorithms Illustration
 
-Web application demonstrating how A* pathfinding search algorithm works to find the shortest path between 2 nodes without hitting any of the obstacles.
+Web application demonstrating how A*, BFS and DFS search algorithm works to find the shortest path (not in case of DFS) between 2 nodes without hitting any of the obstacles.
+
+## A* Algorithm
+A* is an informed searching algorithm that can use coordinates to determine where to search to find the goal node
 
 ### The way the A* algorithm works:
 1- It starts from the start node with a distance cost of 0.
@@ -17,7 +20,9 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 7- Loop till the priority queue is empty
 
-![alt text](https://i.ibb.co/w7tjMrF/screen-capture.gif)
+![alt text](https://i.ibb.co/s3253CJ/ezgif-4-f4d636835c.gif)
+
+### R
 
 ## Legend
 - Green node: Start node
@@ -39,7 +44,7 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 
 ## Live Demo
-[See live demo here](https://a-star-algorithm-llustration.netlify.app)
+[See live demo here](https://pathfinding-algorithms.web.app/)
 
 ## Get Started
 Clone the repository and run 'npm install'
