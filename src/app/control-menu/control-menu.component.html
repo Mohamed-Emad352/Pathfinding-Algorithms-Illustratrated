@@ -36,6 +36,7 @@
         [searchable]="false"
         [clearable]="false"
         [(ngModel)]="selectedAlgorithm"
+        (change)="onAlgorithmChange($event)"
       >
         <ng-option value="aStar">A*</ng-option>
         <ng-option value="bfs">BFS</ng-option>

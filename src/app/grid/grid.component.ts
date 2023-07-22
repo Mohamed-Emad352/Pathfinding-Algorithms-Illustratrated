@@ -8,6 +8,8 @@ import { AStarAlgorithm } from './models/A-star-algorithm';
 import { NodePositionController } from './models/node-postion-controller.model';
 import { Node } from './models/node.model';
 import { Algorithm } from '../enums/algorithm.enum';
+import { BfsAlgorithm } from './models/bfs-algorithm';
+import { DfsAlgorithm } from './models/dfs-algorithm';
 
 const sleep = (milliseconds: number) => {
   // Sleep helper function
@@ -115,13 +117,25 @@ export class GridComponent implements OnInit, OnDestroy {
     return this.gridControlService.triggerAlgorithm.subscribe(() => {
       const selectedAlgorithm = this.gridControlService.selectedAlgorithm;
       let path, nodesSearched;
-      switch (selectedAlgorithm) {
-        case Algorithm.aStar:
-          const algorithm = new AStarAlgorithm(this.grid);
-          [path, nodesSearched] = algorithm.start(
-            this.startNode!,
-            this.endNode!
-          ) || [null, null];
+      let algorithm;
+      if (selectedAlgorithm === Algorithm.aStar) {
+        algorithm = new AStarAlgorithm(this.grid);
+        [path, nodesSearched] = algorithm.start(
+          this.startNode!,
+          this.endNode!
+        ) || [null, null];
+      } else if (selectedAlgorithm === Algorithm.bfs) {
+        algorithm = new BfsAlgorithm(this.grid);
+        [path, nodesSearched] = algorithm.start(
+          this.startNode!,
+          this.endNode!
+        ) || [null, null];
+      } else if (selectedAlgorithm === Algorithm.dfs) {
+        algorithm = new DfsAlgorithm(this.grid);
+        [path, nodesSearched] = algorithm.start(
+          this.startNode!,
+          this.endNode!
+        ) || [null, null];
       }
       this.sendResponseToHeader(path);
       this.displayAllNodes(nodesSearched, path);

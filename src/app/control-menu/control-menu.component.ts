@@ -106,6 +106,15 @@ export class ControlMenuComponent implements OnInit, OnDestroy {
     this.closeMenu();
   }
 
+  public onAlgorithmChange(algorithm: Algorithm): void {
+    console.log(algorithm);
+    if (algorithm === Algorithm.dfs) {
+      alert(
+        "Please note that DFS algorithm by it's nature will NOT guarantee shortest path"
+      );
+    }
+  }
+
   ngOnDestroy(): void {
     this.currentStateSubscription?.unsubscribe();
   }
