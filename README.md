@@ -1,6 +1,6 @@
 # Pathfinding Search Algorithms Illustration
 
-Web application demonstrating how A*, BFS and DFS search algorithm works to find the shortest path (not in case of DFS) between 2 nodes without hitting any of the obstacles.
+Web application demonstrating how A*, Breadth-first Search (BFS) and Depth-first Search (DFS) search algorithm works to find the shortest path (not in case of DFS) between 2 nodes without hitting any of the obstacles.
 
 ## A* Algorithm
 A* is an informed searching algorithm that can use coordinates to determine where to search to find the goal node
@@ -22,7 +22,44 @@ A* is an informed searching algorithm that can use coordinates to determine wher
 
 ![alt text](https://i.ibb.co/s3253CJ/ezgif-4-f4d636835c.gif)
 
-### R
+
+## BFS Algorithm
+BFS unline A* is an uninformed searching algoritm. It searches blindly level by level till its reaches the goal node. Although it is slower than A* in most cases, it is guaranteed to find the shortest path.
+
+### The way the BFS algorithm works:
+1- It starts from the start node and adds it in a queue.
+
+2- It explores the neighbors and mark them as visited.
+
+3- It then adds all neighbors to the queue.
+
+4- Then the neighbor will be selected from the queue and same steps will be repeated.
+
+5- If a node is visited it will not be visited again and won't be pushed to the queue.
+
+6- Repeat till the queue is empty (meaning that all nodes are visited and there is no valid path) or the goal node is reached.
+
+![alt text](https://i.ibb.co/HPBkZsf/ezgif-4-6701804219.gif)
+
+
+## DFS Algorithm
+DFS is another type of uninformed searching algorithms. It searches blindly, but unlike BFS it does not search level by level. It follows a node till it hits a dead end then backtracks and follows another node. Hence the name: "Depth-first search". It does not guarantee a shortest path, but it guarantes a valid path if one is available.
+
+### The way the DFS algorithm works:
+1- It selects the start node as the first node.
+
+2- It marks it as visited.
+
+3- It gets all the neighbors of the node.
+
+3- Then it recursively explores all neighbors, where each recursive call the neighbor node will be treated the same way the start node is treated from step 1 to 3.
+
+3- If no neighbors are found for a node, the call returns.
+
+4- Recursion will continue until a path is found or all calls return (meaning all nodes are visited and no path is valid).
+
+![alt text](https://i.ibb.co/HPBkZsf/ezgif-4-6701804219.gif)
+
 
 ## Legend
 - Green node: Start node
