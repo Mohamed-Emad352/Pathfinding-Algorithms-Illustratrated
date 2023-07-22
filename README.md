@@ -39,7 +39,7 @@ Web application demonstrating how A* pathfinding search algorithm works to find 
 
 
 ## Live Demo
-[See live demo here](https://a-star-algorithm-illustration.web.app)
+[See live demo here](https://a-star-algorithm-llustration.netlify.app)
 
 ## Get Started
 Clone the repository and run 'npm install'
