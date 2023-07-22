@@ -43,7 +43,7 @@ BFS unlike A* is an uninformed searching algoritm. It searches blindly level by 
 
 
 ## DFS Algorithm
-DFS is another type of uninformed searching algorithms. It searches blindly, but unlike BFS it does not search level by level. It follows a node till it hits a dead end then backtracks and follows another node. Hence the name: "Depth-first search". It does not guarantee a shortest path, but it guarantes a valid path if one is available.
+DFS is another type of uninformed searching algorithms. It searches blindly, but unlike BFS it does not search level by level. It follows a node till it hits a dead end then backtracks and follows another node. Hence the name: "Depth-first search". It does not guarantee a shortest path, but it guarantees a valid path if one is available.
 
 ### The way the DFS algorithm works:
 1- It selects the start node as the first node.
