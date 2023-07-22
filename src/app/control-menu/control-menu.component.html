@@ -2,59 +2,64 @@
   <div class="title" (click)="!isOpen ? openMenu() : closeMenu()">
     <img src="../../assets/menu-icon.png" alt="" />
   </div>
-  <div class="flex flex--space-around">
-    <div class="flex pt-1 align-items-start">
-      <div class="flex flex--column w-100 mr-5" style="max-width: 17.5rem">
-        <div class="mb-2 w-100">
-          <p class="pb-2 p-large">Grid size:</p>
-          <div class="row justify-space-between">
-            <div
-              class="selection-box"
-              #sizeSmall
-              (click)="onGridSizeChange('85', sizeSmall)"
-            >
-              <p>Small</p>
-            </div>
-            <div
-              class="selection-box selected"
-              #sizeMedium
-              (click)="onGridSizeChange('341', sizeMedium)"
-            >
-              <p>Medium</p>
-            </div>
-            <div
-              class="selection-box"
-              #sizeLarge
-              (click)="onGridSizeChange('1365', sizeLarge)"
-            >
-              <p>Large</p>
-            </div>
-          </div>
+  <div class="grid">
+    <div>
+      <p class="pb-2 p-large">Grid size:</p>
+      <div class="row justify-space-between">
+        <div
+          class="selection-box"
+          #sizeSmall
+          (click)="onGridSizeChange('85', sizeSmall)"
+        >
+          <p>Small</p>
         </div>
-        <div class="flex w-100">
-          <p class="p-large mr-1">Obstacles:</p>
-          <input
-            #obstacles
-            [value]="'341'"
-            type="number"
-            min="0"
-            style="text-align: center"
-          />
+        <div
+          class="selection-box selected"
+          #sizeMedium
+          (click)="onGridSizeChange('341', sizeMedium)"
+        >
+          <p>Medium</p>
         </div>
-      </div>
-      <div class="flex flex--column w-100" style="max-width: 17.5rem">
-        <div>
-          <p class="pb-2 p-large">Algorithm:</p>
+        <div
+          class="selection-box"
+          #sizeLarge
+          (click)="onGridSizeChange('1365', sizeLarge)"
+        >
+          <p>Large</p>
         </div>
-        <button class="set-obstacles" (click)="startDrawingObstacles()">
-          Draw obstacles manually
-        </button>
       </div>
     </div>
-    <!-- <div class="buttons">
-      <button class="apply" (click)="applySettings()">Apply</button>
-
-    </div> -->
+    <div>
+      <p class="pb-2 p-large">Algorithm:</p>
+      <ng-select
+        class="algorithm-dropdown"
+        [searchable]="false"
+        [clearable]="false"
+        [(ngModel)]="selectedAlgorithm"
+      >
+        <ng-option value="aStar">A*</ng-option>
+        <ng-option value="bfs">BFS</ng-option>
+        <ng-option value="dfs">DFS</ng-option>
+      </ng-select>
+    </div>
+    <div style="height: min-content" class="row w-100 align-items-center">
+      <p class="p-large mr-1">Obstacles:</p>
+      <input
+        #obstacles
+        [value]="'341'"
+        type="number"
+        min="0"
+        style="text-align: center"
+      />
+    </div>
+    <div>
+      <button class="set-obstacles" (click)="startDrawingObstacles()">
+        Draw obstacles manually
+      </button>
+    </div>
+    <button class="apply" (click)="applySettings()">
+      <img src="../../assets/check-icon.png" alt="" />
+    </button>
   </div>
   <div class="copyright">Copyrighted by Mohamed Emad Mahmoud &copy; 2022</div>
 </div>

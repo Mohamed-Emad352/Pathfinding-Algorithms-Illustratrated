@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { AStarAlgorithm } from '../grid/models/A-star-algorithm';
-import { Node } from '../grid/models/node.model';
+import { Algorithm } from '../enums/algorithm.enum';
 
 export const GRID_SIZE_SMALL = 16;
 export const GRID_SIZE_MEDIUM = 32;
@@ -18,20 +17,14 @@ export class GridControlService {
   private ready: boolean = false;
   private drawingEventTriggered = new Subject<boolean>();
   public triggerAlgorithm = new EventEmitter<any>();
+  public selectedAlgorithm: Algorithm = Algorithm.aStar;
 
-  public getGridSizeSubject(): BehaviorSubject<{ [key: string]: number }> {
+  public getGridSizeSubject(): BehaviorSubject<{ [key: string]: any }> {
     return this.gridSizeSubject;
   }
 
   public getDrawingEventTriggered(): Subject<boolean> {
     return this.drawingEventTriggered;
-  }
-
-  public runAlgorithm(grid: Node[], positions: Node[]): Node[] | null {
-    const algorithm = new AStarAlgorithm(grid);
-    const startNode = positions[0];
-    const endNode = positions[1];
-    return algorithm.start(startNode, endNode);
   }
 
   public isReady(): boolean {

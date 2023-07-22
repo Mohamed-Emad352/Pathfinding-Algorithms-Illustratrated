@@ -5,18 +5,18 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { GridComponent } from './grid/grid.component';
 import { ControlMenuComponent } from './control-menu/control-menu.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     GridComponent,
-    ControlMenuComponent
+    ControlMenuComponent,
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule, NgSelectModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

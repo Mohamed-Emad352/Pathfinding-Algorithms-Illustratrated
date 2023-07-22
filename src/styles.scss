@@ -1,3 +1,5 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 @font-face {
   font-family: "IBM Plex Sans";
   src: url("assets/fonts/IBM-font.ttf") format("ttf");
@@ -38,8 +40,16 @@
   justify-content: start;
 }
 
+.justify-content-center {
+  justify-content: center;
+}
+
 .align-items-start {
   align-items: start !important;
+}
+
+.align-items-center {
+  align-items: center !important;
 }
 
 .pt-1 {

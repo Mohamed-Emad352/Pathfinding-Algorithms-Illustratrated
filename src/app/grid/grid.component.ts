@@ -7,6 +7,7 @@ import { GridControlService } from '../services/grid-control.service';
 import { AStarAlgorithm } from './models/A-star-algorithm';
 import { NodePositionController } from './models/node-postion-controller.model';
 import { Node } from './models/node.model';
+import { Algorithm } from '../enums/algorithm.enum';
 
 const sleep = (milliseconds: number) => {
   // Sleep helper function
@@ -112,11 +113,16 @@ export class GridComponent implements OnInit, OnDestroy {
 
   private subscribeToAlgorithmEvent(): Subscription {
     return this.gridControlService.triggerAlgorithm.subscribe(() => {
-      const algorithm = new AStarAlgorithm(this.grid);
-      const [path, nodesSearched] = algorithm.start(
-        this.startNode!,
-        this.endNode!
-      ) || [null, null];
+      const selectedAlgorithm = this.gridControlService.selectedAlgorithm;
+      let path, nodesSearched;
+      switch (selectedAlgorithm) {
+        case Algorithm.aStar:
+          const algorithm = new AStarAlgorithm(this.grid);
+          [path, nodesSearched] = algorithm.start(
+            this.startNode!,
+            this.endNode!
+          ) || [null, null];
+      }
       this.sendResponseToHeader(path);
       this.displayAllNodes(nodesSearched, path);
     });

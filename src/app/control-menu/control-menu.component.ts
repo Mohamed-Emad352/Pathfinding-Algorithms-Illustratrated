@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Appstate } from '../enums/app-state.enum';
-import { NodePositionController } from '../grid/models/node-postion-controller.model';
 import { CurrentAppStateService } from '../services/current-app-state.service';
 import {
   GridControlService,
@@ -18,6 +17,7 @@ import {
   GRID_SIZE_MEDIUM,
   GRID_SIZE_SMALL,
 } from '../services/grid-control.service';
+import { Algorithm } from '../enums/algorithm.enum';
 
 @Component({
   selector: 'app-control-menu',
@@ -25,9 +25,10 @@ import {
   styleUrls: ['./control-menu.component.scss'],
 })
 export class ControlMenuComponent implements OnInit, OnDestroy {
-  public isOpen = false;
-  private currentState?: Appstate;
   private currentStateSubscription?: Subscription;
+  private currentState?: Appstate;
+  public isOpen = false;
+  public selectedAlgorithm: Algorithm = Algorithm.aStar;
   @Output() public toggleMenu = new EventEmitter<void>();
   @Output() public removeOverlay = new EventEmitter<void>();
   @ViewChild('menu') menu?: ElementRef;
@@ -87,6 +88,8 @@ export class ControlMenuComponent implements OnInit, OnDestroy {
 
   public applySettings(): void {
     const size = this.getSelectedSize();
+    console.log(this.selectedAlgorithm);
+    this.gridControlService.selectedAlgorithm = this.selectedAlgorithm;
     this.gridControlService.getGridSizeSubject().next({
       size: size,
       obstaclesNum: this.obstaclesNum!.nativeElement.value,
