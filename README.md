@@ -81,7 +81,7 @@ DFS is another type of uninformed searching algorithms. It searches blindly, but
 
 
 ## Live Demo
-[See live demo here](https://pathfinding-algorithms.web.app/)
+[See live demo here](https://pathfinding-algorithms-illustrated.netlify.app/)
 
 ## Get Started
 Clone the repository and run 'npm install'
